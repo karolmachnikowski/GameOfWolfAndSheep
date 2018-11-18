@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="gameViewModel"
+                type="com.example.karol.gameofwolfandsheep.viewmodel.GameViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
+
+            <!--Row 1-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_00"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 0)}"
+                        app:render='@{gameViewModel.cells["00"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_01"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 1)}"
+                        app:render='@{gameViewModel.cells["01"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:srcCompat="@drawable/sheep"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_02"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 2)}"
+                        app:render='@{gameViewModel.cells["02"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_03"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 3)}"
+                        app:render='@{gameViewModel.cells["03"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:srcCompat="@drawable/sheep"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_04"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 4)}"
+                        app:render='@{gameViewModel.cells["04"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_05"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 5)}"
+                        app:render='@{gameViewModel.cells["05"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:srcCompat="@drawable/sheep"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_06"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 6)}"
+                        app:render='@{gameViewModel.cells["06"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_07"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(0,7)}"
+                        app:render='@{gameViewModel.cells["07"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:srcCompat="@drawable/sheep"/>
+            </LinearLayout>
+
+            <!--Row 2-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_10"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 0)}"
+                        app:render='@{gameViewModel.cells["10"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_11"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 1)}"
+                        app:render='@{gameViewModel.cells["11"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_12"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 2)}"
+                        app:render='@{gameViewModel.cells["12"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_13"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 3)}"
+                        app:render='@{gameViewModel.cells["13"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_14"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 4)}"
+                        app:render='@{gameViewModel.cells["14"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_15"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 5)}"
+                        app:render='@{gameViewModel.cells["15"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_16"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 6)}"
+                        app:render='@{gameViewModel.cells["16"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_17"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(1,7)}"
+                        app:render='@{gameViewModel.cells["17"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!--Row 3-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_20"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 0)}"
+                        app:render='@{gameViewModel.cells["20"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_21"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 1)}"
+                        app:render='@{gameViewModel.cells["21"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_22"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 2)}"
+                        app:render='@{gameViewModel.cells["22"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_23"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 3)}"
+                        app:render='@{gameViewModel.cells["23"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_24"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 4)}"
+                        app:render='@{gameViewModel.cells["24"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_25"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 5)}"
+                        app:render='@{gameViewModel.cells["25"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_26"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 6)}"
+                        app:render='@{gameViewModel.cells["26"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_27"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(2,7)}"
+                        app:render='@{gameViewModel.cells["27"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!--Row 4-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_30"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 0)}"
+                        app:render='@{gameViewModel.cells["30"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_31"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 1)}"
+                        app:render='@{gameViewModel.cells["31"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_32"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 2)}"
+                        app:render='@{gameViewModel.cells["32"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_33"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 3)}"
+                        app:render='@{gameViewModel.cells["33"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_34"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 4)}"
+                        app:render='@{gameViewModel.cells["34"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_35"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 5)}"
+                        app:render='@{gameViewModel.cells["35"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_36"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 6)}"
+                        app:render='@{gameViewModel.cells["36"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_37"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(3,7)}"
+                        app:render='@{gameViewModel.cells["37"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!--Row 5-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_40"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 0)}"
+                        app:render='@{gameViewModel.cells["40"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_41"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 1)}"
+                        app:render='@{gameViewModel.cells["41"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_42"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 2)}"
+                        app:render='@{gameViewModel.cells["42"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_43"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 3)}"
+                        app:render='@{gameViewModel.cells["43"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_44"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 4)}"
+                        app:render='@{gameViewModel.cells["44"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_45"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 5)}"
+                        app:render='@{gameViewModel.cells["45"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_46"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 6)}"
+                        app:render='@{gameViewModel.cells["46"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_47"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(4,7)}"
+                        app:render='@{gameViewModel.cells["47"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!--Row 6-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_50"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 0)}"
+                        app:render='@{gameViewModel.cells["50"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_51"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 1)}"
+                        app:render='@{gameViewModel.cells["51"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_52"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 2)}"
+                        app:render='@{gameViewModel.cells["52"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_53"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 3)}"
+                        app:render='@{gameViewModel.cells["53"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_54"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 4)}"
+                        app:render='@{gameViewModel.cells["54"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_55"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 5)}"
+                        app:render='@{gameViewModel.cells["55"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_56"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 6)}"
+                        app:render='@{gameViewModel.cells["56"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_57"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(5,7)}"
+                        app:render='@{gameViewModel.cells["57"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!--Row 7-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_60"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 0)}"
+                        app:render='@{gameViewModel.cells["60"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_61"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 1)}"
+                        app:render='@{gameViewModel.cells["61"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_62"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 2)}"
+                        app:render='@{gameViewModel.cells["62"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_63"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 3)}"
+                        app:render='@{gameViewModel.cells["63"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_64"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 4)}"
+                        app:render='@{gameViewModel.cells["64"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_65"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 5)}"
+                        app:render='@{gameViewModel.cells["65"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_66"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 6)}"
+                        app:render='@{gameViewModel.cells["66"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_67"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(6,7)}"
+                        app:render='@{gameViewModel.cells["67"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+
+            <!--Row 8-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_70"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 0)}"
+                        app:render='@{gameViewModel.cells["70"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        tools:srcCompat="@drawable/wolf"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_71"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 1)}"
+                        app:render='@{gameViewModel.cells["71"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_72"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 2)}"
+                        app:render='@{gameViewModel.cells["72"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_73"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 3)}"
+                        app:render='@{gameViewModel.cells["73"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_74"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 4)}"
+                        app:render='@{gameViewModel.cells["74"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_75"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 5)}"
+                        app:render='@{gameViewModel.cells["75"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_two"
+                        android:id="@+id/cell_76"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 6)}"
+                        app:render='@{gameViewModel.cells["76"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="5dp"
+                        android:background="@drawable/cell_background_one"
+                        android:id="@+id/cell_77"
+                        android:onClick="@{() -> gameViewModel.onClickedCellAt(7,7)}"
+                        app:render='@{gameViewModel.cells["7"]}'
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
