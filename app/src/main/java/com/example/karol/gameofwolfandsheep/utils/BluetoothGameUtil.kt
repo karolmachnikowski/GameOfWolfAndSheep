@@ -24,6 +24,17 @@ const val STATE_CONNECTING = 2
 const val STATE_CONNECTED_AS_SERVER = 3
 const val STATE_CONNECTED_AS_CLIENT = 4
 
+const val MESSAGE_STATE_CHANGE = 1
+const val MESSAGE_READ = 2
+const val MESSAGE_WRITE = 3
+const val MESSAGE_DEVICE_NAME = 4
+const val MESSAGE_BT_TURNED_OF_WHILE_LISTENING = 5
+const val MESSAGE_CONNECTION_FAILED = 6
+const val MESSAGE_CONNECTION_LOST = 7
+const val MESSAGE_WRITE_FAILED = 8
+
+const val DEVICE_NAME = "DEVICE_NAME_KEY"
+
 object BluetoothGameUtil {
 
     private val serviceUUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66")

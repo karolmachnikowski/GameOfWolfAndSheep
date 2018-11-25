@@ -31,12 +31,11 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
-        setupBinding()
+        setupViewModelAndBinding()
         setupObservers()
-        BluetoothGameUtil.setHandler(viewModel.handler)
     }
 
-    private fun setupBinding() {
+    private fun setupViewModelAndBinding() {
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
         val activityBinding = DataBindingUtil.setContentView<GameActivityBinding>(this, R.layout.game_activity)
         activityBinding.gameViewModel = viewModel
@@ -111,7 +110,7 @@ class GameActivity : AppCompatActivity() {
             REQUEST_CONNECT_DEVICE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val address = data?.extras?.getString(EXTRA_DEVICE_ADDRESS)
-                    BluetoothGameUtil.connect(address)
+                    viewModel.connectToDevice(address)
                 }
             }
             REQUEST_ENABLE_BT_TO_CONNECT -> {
@@ -123,7 +122,7 @@ class GameActivity : AppCompatActivity() {
             }
             REQUEST_ENABLE_BT_TO_ALLOW_CONNECT -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    BluetoothGameUtil.listenForConnections()
+                    viewModel.listenForConnections()
                 } else {
                     showBluetoothNeededToast()
                 }
@@ -141,7 +140,7 @@ class GameActivity : AppCompatActivity() {
         val allowToConnectMenuItem = menu?.findItem(R.id.allow_to_connect)
         val connectMenuItem = menu?.findItem(R.id.connect)
         val disconnectMenuItem = menu?.findItem(R.id.disconnet)
-        when (BluetoothGameUtil.getState()) {
+        when (viewModel.getBluetoothState()) {
             STATE_NONE -> {
                 allowToConnectMenuItem?.setTitle(R.string.allow_to_connect_menu_item)
             }
@@ -168,24 +167,24 @@ class GameActivity : AppCompatActivity() {
                 return true
             }
             R.id.disconnet -> {
-                BluetoothGameUtil.stop()
+                viewModel.stopBluetoothUtil()
                 return true
             }
             R.id.allow_to_connect -> {
-                when (BluetoothGameUtil.getState()) {
-                    STATE_LISTENING -> BluetoothGameUtil.stop()
+                when (viewModel.getBluetoothState()) {
+                    STATE_LISTENING -> viewModel.stopBluetoothUtil()
                     else -> {
                         if(!viewModel.isBluetoothEnabled()){
                             askForBuetoothEnabling(REQUEST_ENABLE_BT_TO_ALLOW_CONNECT)
                         } else {
-                            BluetoothGameUtil.listenForConnections()
+                            viewModel.listenForConnections()
                         }
                     }
                 }
                 return true
             }
             R.id.discoverable -> {
-                BluetoothGameUtil.ensureDiscoverable(this)
+                viewModel.ensureDiscoverable(this)
                 return true
             }
         }
@@ -194,6 +193,6 @@ class GameActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.stopBluetoothService()
+        viewModel.stopBluetoothUtil()
     }
 }

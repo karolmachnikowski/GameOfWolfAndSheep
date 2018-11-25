@@ -1,23 +1,12 @@
 package com.example.karol.gameofwolfandsheep.viewmodel
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Handler
 import android.os.Message
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.karol.gameofwolfandsheep.model.*
 import com.example.karol.gameofwolfandsheep.utils.*
-
-const val MESSAGE_STATE_CHANGE = 1
-const val MESSAGE_READ = 2
-const val MESSAGE_WRITE = 3
-const val MESSAGE_DEVICE_NAME = 4
-const val MESSAGE_BT_TURNED_OF_WHILE_LISTENING = 5
-const val MESSAGE_CONNECTION_FAILED = 6
-const val MESSAGE_CONNECTION_LOST = 7
-const val MESSAGE_WRITE_FAILED = 8
-
-const val DEVICE_NAME = "DEVICE_NAME_KEY"
 
 class GameViewModel : ViewModel() {
 
@@ -30,6 +19,9 @@ class GameViewModel : ViewModel() {
     var bluetoothPlayer = MutableLiveData<Player>()
     var bluetoothDevice: String? = null
 
+    init {
+        BluetoothGameUtil.setHandler(getHandler())
+    }
 
     fun restartGame() {
         board.restartBoard()
@@ -51,6 +43,24 @@ class GameViewModel : ViewModel() {
     }
 
     fun isBluetoothEnabled() = BluetoothGameUtil.isBluetoothEnabled()
+
+    fun getBluetoothState() = BluetoothGameUtil.getState()
+
+    fun ensureDiscoverable(context: Context) {
+        BluetoothGameUtil.ensureDiscoverable(context)
+    }
+
+    fun connectToDevice(address: String?) {
+        BluetoothGameUtil.connect(address)
+    }
+
+    fun listenForConnections() {
+        BluetoothGameUtil.listenForConnections()
+    }
+
+    fun stopBluetoothUtil() {
+        BluetoothGameUtil.stop()
+    }
 
     private fun chooseSheepAndShowPossibleMoves(row: Int, column: Int) {
         clearPossibleMoves()
@@ -109,63 +119,67 @@ class GameViewModel : ViewModel() {
         cells.putAll(filteredCells)
     }
 
-    val handler = @SuppressLint("HandlerLeak")
-    object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                MESSAGE_STATE_CHANGE -> {
-                    bluetoothStatus.value = msg.arg1
-                    when (msg.arg1) {
-                        STATE_CONNECTED_AS_SERVER -> {
-                            bluetoothPlayer.value = Player.Sheep
-                            board.restartBoard()
-                        }
-                        STATE_CONNECTED_AS_CLIENT -> {
-                            bluetoothPlayer.value = Player.Wolf
-                            board.restartBoard()
-                        }
-                        STATE_NONE, STATE_LISTENING, STATE_CONNECTING -> {
-                            bluetoothPlayer.value = null
-                            bluetoothDevice = null
-                        }
+    private fun getHandler() =
+        object : Handler() {
+            override fun handleMessage(msg: Message) {
+                when (msg.what) {
+                    MESSAGE_STATE_CHANGE -> {
+                        handleMessageStateChange(msg)
+                    }
+                    MESSAGE_READ -> {
+                        handleMessageRead(msg)
+                    }
+                    MESSAGE_DEVICE_NAME -> {
+                        bluetoothDevice = msg.data.getString(DEVICE_NAME)
+                    }
+                    MESSAGE_BT_TURNED_OF_WHILE_LISTENING -> {
+                        bluetoothFailure.value = BluetoothFailure.LISTENING_LOST
+                    }
+                    MESSAGE_CONNECTION_LOST -> {
+                        bluetoothFailure.value = BluetoothFailure.CONNECTION_LOST
+                        board.restartBoard()
+                    }
+                    MESSAGE_CONNECTION_FAILED -> {
+                        bluetoothFailure.value = BluetoothFailure.CONNECTION_FAILED
                     }
                 }
-                MESSAGE_READ -> {
-                    val readBuf = msg.obj as ByteArray
-                    val readMessage = String(readBuf, 0, msg.arg1)
-                    val fromCellKey = readMessage.substring(0, 2)
-                    val toCellKey = readMessage.substring(2, 4)
-                    val value = board.getCell(fromCellKey)
-                    board.setCellAsEmpty(fromCellKey)
-                    board.setCell(toCellKey, value)
+            }
+        }
 
-                    if (value == CellValue.Wolf.value)
-                        board.setWolfPosition(toCellKey.substring(0, 1).toInt(), toCellKey.substring(1).toInt())
-
-                    if (board.getWolfPosition().first == FIRST_ROW)
-                        board.handleWolfWonCase()
-                    else if (!board.hasWolfAnyMovePossible()) board.handleSheepWonCase()
-
-                    board.setCurrentPlayer(bluetoothPlayer.value!!)
-                }
-                MESSAGE_DEVICE_NAME -> {
-                    bluetoothDevice = msg.data.getString(DEVICE_NAME)
-                }
-                MESSAGE_BT_TURNED_OF_WHILE_LISTENING -> {
-                    bluetoothFailure.value = BluetoothFailure.LISTENING_LOST
-                }
-                MESSAGE_CONNECTION_LOST -> {
-                    bluetoothFailure.value = BluetoothFailure.CONNECTION_LOST
-                    board.restartBoard()
-                }
-                MESSAGE_CONNECTION_FAILED -> {
-                    bluetoothFailure.value = BluetoothFailure.CONNECTION_FAILED
-                }
+    private fun handleMessageStateChange(msg: Message){
+        bluetoothStatus.value = msg.arg1
+        when (msg.arg1) {
+            STATE_CONNECTED_AS_SERVER -> {
+                bluetoothPlayer.value = Player.Sheep
+                board.restartBoard()
+            }
+            STATE_CONNECTED_AS_CLIENT -> {
+                bluetoothPlayer.value = Player.Wolf
+                board.restartBoard()
+            }
+            STATE_NONE, STATE_LISTENING, STATE_CONNECTING -> {
+                bluetoothPlayer.value = null
+                bluetoothDevice = null
             }
         }
     }
 
-    fun stopBluetoothService() {
-        BluetoothGameUtil.stop()
+    private fun handleMessageRead(msg: Message){
+        val readBuf = msg.obj as ByteArray
+        val readMessage = String(readBuf, 0, msg.arg1)
+        val fromCellKey = readMessage.substring(0, 2)
+        val toCellKey = readMessage.substring(2, 4)
+        val value = board.getCell(fromCellKey)
+        board.setCellAsEmpty(fromCellKey)
+        board.setCell(toCellKey, value)
+
+        if (value == CellValue.Wolf.value)
+            board.setWolfPosition(toCellKey.substring(0, 1).toInt(), toCellKey.substring(1).toInt())
+
+        if (board.getWolfPosition().first == FIRST_ROW)
+            board.handleWolfWonCase()
+        else if (!board.hasWolfAnyMovePossible()) board.handleSheepWonCase()
+
+        board.setCurrentPlayer(bluetoothPlayer.value!!)
     }
 }

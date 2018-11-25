@@ -8,40 +8,61 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.karol.gameofwolfandsheep.R
-import kotlinx.android.synthetic.main.activity_device_list.*
+import com.example.karol.gameofwolfandsheep.viewmodel.ConnectViewModel
+import kotlinx.android.synthetic.main.connect_activity.*
 
-const val EXTRA_DEVICE_ADDRESS = "DEVICE_ADRESS_KEY"
+const val EXTRA_DEVICE_ADDRESS = "DEVICE_ADDRESS_KEY"
+const val MAC_ADDRESS_LENGTH = 17
 
-class ConnectActivity : AppCompatActivity() {
+class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClickHandler {
 
-    private var mBtAdapter: BluetoothAdapter? = null
+    private lateinit var viewModel: ConnectViewModel
 
-    private var mNewDevicesArrayAdapter: ArrayAdapter<String>? = null
+    private lateinit var pairedDevicesRecyclerView: RecyclerView
+    private lateinit var pairedDevicesAdapter: RecyclerView.Adapter<*>
+    private lateinit var pairedDevicesViewManager: RecyclerView.LayoutManager
+    private lateinit var discoveredDevicesRecyclerView: RecyclerView
+    private lateinit var discoveredDevicesAdapter: RecyclerView.Adapter<*>
+    private lateinit var discoveredDevicesViewManager: RecyclerView.LayoutManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.connect_activity)
+        setupViewModel()
+        setupObservers()
+
         setResult(Activity.RESULT_CANCELED)
+
+        pairedDevicesAdapter = DevicesAdapter(viewModel.pairedDevices, this)
+        pairedDevicesViewManager = LinearLayoutManager(this)
+
+        discoveredDevicesAdapter = DevicesAdapter(viewModel.discoveredDevices, this)
+        discoveredDevicesViewManager = LinearLayoutManager(this)
+
+        pairedDevicesRecyclerView = findViewById<RecyclerView>(R.id.paired_devices).apply {
+            layoutManager = pairedDevicesViewManager
+            adapter = pairedDevicesAdapter
+        }
+        discoveredDevicesRecyclerView = findViewById<RecyclerView>(R.id.discovered_devices).apply {
+            layoutManager = discoveredDevicesViewManager
+            adapter = discoveredDevicesAdapter
+        }
 
         button_scan.setOnClickListener { v ->
             doDiscovery()
             v.visibility = View.GONE
         }
-
-        val pairedDevicesArrayAdapter = ArrayAdapter<String>(this, R.layout.device_list_element)
-        mNewDevicesArrayAdapter = ArrayAdapter(this, R.layout.device_list_element)
-
-        paired_devices.adapter = pairedDevicesArrayAdapter
-        paired_devices.onItemClickListener = mDeviceClickListener
-
-        new_devices.adapter = mNewDevicesArrayAdapter
-        new_devices.onItemClickListener = mDeviceClickListener
 
         var filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
         this.registerReceiver(mReceiver, filter)
@@ -49,47 +70,57 @@ class ConnectActivity : AppCompatActivity() {
         filter = IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         this.registerReceiver(mReceiver, filter)
 
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter()
-
-        val pairedDevices = mBtAdapter!!.bondedDevices
-
-        if (pairedDevices.size > 0) {
+        if (viewModel.pairedDevices.size > 0)
             title_paired_devices.visibility = View.VISIBLE
-            pairedDevices
-                .forEach { pairedDevicesArrayAdapter.add(it.name + "\n" + it.address) }
-
-        } else {
-            val noDevices = resources.getText(R.string.none_paired).toString()
-            pairedDevicesArrayAdapter.add(noDevices)
-        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mBtAdapter != null) {
-            mBtAdapter!!.cancelDiscovery()
-        }
+    private fun setupViewModel() {
+        viewModel = ViewModelProviders.of(this).get(ConnectViewModel::class.java)
+    }
 
-        this.unregisterReceiver(mReceiver)
+    private fun setupObservers() {
+        viewModel.discoveredDevices.addOnListChangedCallback(object :
+            ObservableList.OnListChangedCallback<ObservableArrayList<String>>() {
+            override fun onItemRangeInserted(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+                discoveredDevicesAdapter.notifyDataSetChanged()
+            }
+
+            override fun onChanged(sender: ObservableArrayList<String>?) {
+            }
+
+            override fun onItemRangeRemoved(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+            }
+
+            override fun onItemRangeMoved(
+                sender: ObservableArrayList<String>?,
+                fromPosition: Int, toPosition: Int, itemCount: Int
+            ) {
+            }
+
+            override fun onItemRangeChanged(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+            }
+        })
     }
 
     private fun doDiscovery() {
         setTitle(R.string.scanning)
+        title_discovered_devices.visibility = View.VISIBLE
 
-        title_new_devices.visibility = View.VISIBLE
-
-        if (mBtAdapter!!.isDiscovering) {
-            mBtAdapter!!.cancelDiscovery()
-        }
-
-        mBtAdapter!!.startDiscovery()
+        viewModel.startDiscovery()
     }
 
-    private val mDeviceClickListener = AdapterView.OnItemClickListener { _, v, _, _ ->
-        mBtAdapter!!.cancelDiscovery()
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelDiscovery()
 
-        val info = (v as TextView).text.toString()
-        val address = info.substring(info.length - 17)
+        this.unregisterReceiver(mReceiver)
+    }
+
+    override fun onClick(view: View) {
+        viewModel.cancelDiscovery()
+
+        val info = (view as TextView).text.toString()
+        val address = info.substring(info.length - MAC_ADDRESS_LENGTH)
 
         val intent = Intent()
         intent.putExtra(EXTRA_DEVICE_ADDRESS, address)
@@ -102,22 +133,11 @@ class ConnectActivity : AppCompatActivity() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
 
-            if (BluetoothDevice.ACTION_FOUND == action) {
-                val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
-                if (device.bondState != BluetoothDevice.BOND_BONDED) {
-                    mNewDevicesArrayAdapter!!.add(
-                        if(device.name != null) device.name + "\n" + device.address
-                        else device.address
-                    )
-                }
-
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
+            if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
                 setTitle(R.string.select_device)
-                if (mNewDevicesArrayAdapter!!.count == 0) {
-                    val noDevices = resources.getText(R.string.none_found).toString()
-                    mNewDevicesArrayAdapter!!.add(noDevices)
-                }
             }
+
+            viewModel.onReceive(intent)
         }
     }
 
