@@ -87,7 +87,8 @@ class GameActivity : AppCompatActivity() {
         val alertDialog = AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.game_ended_dialog_title)
-            .setPositiveButton(getString(R.string.has_won, player.toString())) { _, _ ->
+            .setMessage(getString(R.string.has_won, player.toString()))
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
                 viewModel.restartGame()
             }
             .create()

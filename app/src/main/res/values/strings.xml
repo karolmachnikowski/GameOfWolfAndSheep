@@ -15,6 +15,7 @@
     <string name="playing_as">You are playing as %s</string>
     <string name="game_ended_dialog_title">Game has ended</string>
     <string name="has_won">%s has won!</string>
+    <string name="ok">OK</string>
     <string name="player_turn">%s turn!</string>
     <string name="listening_lost">Listening for connections has been stopped. Bluetooth is needed!</string>
     <string name="connection_lost">Connection has been lost!</string>
