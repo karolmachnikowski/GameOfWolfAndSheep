@@ -6,5 +6,5 @@ enum class CellValue(val value: Int?, val resId: Int?) {
     Empty(null, null),
     Wolf(1, R.drawable.wolf),
     Sheep(2, R.drawable.sheep),
-    PossibleMove(3, null)
+    PossibleMove(5, null)
 }

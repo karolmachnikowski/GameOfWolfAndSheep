@@ -11,12 +11,58 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:foregroundGravity="center_vertical"
             android:background="@android:color/black">
 
         <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/board_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                    tools:text="You are playings as Wolf"
+                    android:textColor="@color/colorAccent"
+                    android:padding="2dp"
+                    android:id="@+id/playing_as_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"/>
+
+            <TextView
+                    tools:text="Wolf turn!"
+                    android:textColor="@color/colorAccent"
+                    android:padding="2dp"
+                    android:id="@+id/current_player_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"/>
+        </LinearLayout>
+
+        <TextView
+                tools:text="Local game"
+                android:textColor="@color/colorAccent"
+                android:padding="2dp"
+                android:id="@+id/bluetooth_state_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/board_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        <LinearLayout
+                android:id="@+id/board_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_gravity="center_vertical"
                 app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:orientation="vertical"
                 tools:ignore="NestedWeights">
 

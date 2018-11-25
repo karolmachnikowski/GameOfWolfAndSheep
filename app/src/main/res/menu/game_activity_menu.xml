@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/connect"
+        android:icon="@drawable/bluetooth"
+        android:title="@string/connect_menu_item"
+        app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/disconnet"
+            android:title="@string/disconnect__menu_item"
+            android:visible="false"
+    />
+
+    <item
+            android:id="@+id/allow_to_connect"
+            android:title="@string/allow_to_connect_menu_item"
+    />
+
+    <item
+            android:id="@+id/discoverable"
+            android:title="@string/make_discoverable_menu_item"
+            app:showAsAction="never"/>
+
+</menu>
