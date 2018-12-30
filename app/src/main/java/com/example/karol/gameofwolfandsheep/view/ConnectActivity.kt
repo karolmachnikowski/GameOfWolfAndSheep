@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.connect_activity.*
 const val EXTRA_DEVICE_ADDRESS = "DEVICE_ADDRESS_KEY"
 const val MAC_ADDRESS_LENGTH = 17
 
-class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClickHandler {
+class ConnectActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ConnectViewModel
 
@@ -44,10 +44,10 @@ class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClic
 
         setResult(Activity.RESULT_CANCELED)
 
-        pairedDevicesAdapter = DevicesAdapter(viewModel.pairedDevices, this)
+        pairedDevicesAdapter = DevicesListAdapter(viewModel.getPairedDevices(), onClickHandler)
         pairedDevicesViewManager = LinearLayoutManager(this)
 
-        discoveredDevicesAdapter = DevicesAdapter(viewModel.discoveredDevices, this)
+        discoveredDevicesAdapter = DevicesListAdapter(viewModel.getDiscoveredDevices(), onClickHandler)
         discoveredDevicesViewManager = LinearLayoutManager(this)
 
         pairedDevicesRecyclerView = findViewById<RecyclerView>(R.id.paired_devices).apply {
@@ -65,12 +65,12 @@ class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClic
         }
 
         var filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-        this.registerReceiver(mReceiver, filter)
+        this.registerReceiver(broadcastReveiver, filter)
 
         filter = IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-        this.registerReceiver(mReceiver, filter)
+        this.registerReceiver(broadcastReveiver, filter)
 
-        if (viewModel.pairedDevices.size > 0)
+        if (viewModel.getPairedDevices().size > 0)
             title_paired_devices.visibility = View.VISIBLE
     }
 
@@ -79,11 +79,10 @@ class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClic
     }
 
     private fun setupObservers() {
-        viewModel.discoveredDevices.addOnListChangedCallback(object :
+        viewModel.getDiscoveredDevices().addOnListChangedCallback(object :
             ObservableList.OnListChangedCallback<ObservableArrayList<String>>() {
             override fun onItemRangeInserted(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
-                discoveredDevicesAdapter.notifyDataSetChanged()
-            }
+                discoveredDevicesAdapter.notifyDataSetChanged() }
 
             override fun onChanged(sender: ObservableArrayList<String>?) {
             }
@@ -113,23 +112,25 @@ class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClic
         super.onDestroy()
         viewModel.cancelDiscovery()
 
-        this.unregisterReceiver(mReceiver)
+        this.unregisterReceiver(broadcastReveiver)
     }
 
-    override fun onClick(view: View) {
-        viewModel.cancelDiscovery()
+    private val onClickHandler = object: DevicesListAdapter.DevicesAdapterOnClickHandler {
+        override fun onClick(view: View) {
+            viewModel.cancelDiscovery()
 
-        val info = (view as TextView).text.toString()
-        val address = info.substring(info.length - MAC_ADDRESS_LENGTH)
+            val info = (view as TextView).text.toString()
+            val address = info.substring(info.length - MAC_ADDRESS_LENGTH)
 
-        val intent = Intent()
-        intent.putExtra(EXTRA_DEVICE_ADDRESS, address)
+            val intent = Intent()
+            intent.putExtra(EXTRA_DEVICE_ADDRESS, address)
 
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
-    private val mReceiver = object : BroadcastReceiver() {
+    private val broadcastReveiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
 
@@ -137,7 +138,7 @@ class ConnectActivity : AppCompatActivity(), DevicesAdapter.DevicesAdapterOnClic
                 setTitle(R.string.select_device)
             }
 
-            viewModel.onReceive(intent)
+            viewModel.onReceiveBroadcast(intent)
         }
     }
 

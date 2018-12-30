@@ -14,8 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.karol.gameofwolfandsheep.R
 import com.example.karol.gameofwolfandsheep.databinding.GameActivityBinding
-import com.example.karol.gameofwolfandsheep.model.BluetoothFailure
-import com.example.karol.gameofwolfandsheep.model.Player
 import com.example.karol.gameofwolfandsheep.utils.*
 import com.example.karol.gameofwolfandsheep.viewmodel.GameViewModel
 import kotlinx.android.synthetic.main.game_activity.*
@@ -31,34 +29,38 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.game_activity)
-        setupViewModelAndBinding()
+        setupViewModel()
+        setupBinding()
         setupObservers()
     }
 
-    private fun setupViewModelAndBinding() {
+    private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+    }
+
+    private fun setupBinding(){
         val activityBinding = DataBindingUtil.setContentView<GameActivityBinding>(this, R.layout.game_activity)
         activityBinding.gameViewModel = viewModel
     }
 
     private fun setupObservers() {
-        viewModel.winner.observe(this, Observer { winner ->
+        viewModel.getWinner().observe(this, Observer { winner ->
             showGameEndedDialog(winner)
         })
 
-        viewModel.bluetoothStatus.observe(this, Observer { appStatus ->
+        viewModel.getBluetoothStatus().observe(this, Observer { status ->
             this.invalidateOptionsMenu()
             bluetooth_state_text_view.text =
-                    when (appStatus) {
+                    when (status) {
                         STATE_CONNECTED_AS_CLIENT, STATE_CONNECTED_AS_SERVER ->
-                            getString(R.string.connected_state_title, viewModel.bluetoothDevice)
+                            getString(R.string.connected_state_title, viewModel.getBluetoothDevice())
                         STATE_CONNECTING -> getString(R.string.connecting_state_title)
                         STATE_LISTENING -> getString(R.string.listening_state_title)
                         else -> getString(R.string.none_state_title)
                     }
         })
 
-        viewModel.bluetoothPlayer.observe(this, Observer { bluetoothPlayer ->
+        viewModel.getBluetoothPlayer().observe(this, Observer { bluetoothPlayer ->
             if (bluetoothPlayer != null) {
                 playing_as_text_view.text = getString(R.string.playing_as, bluetoothPlayer.toString())
             } else {
@@ -66,11 +68,11 @@ class GameActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.bluetoothFailure.observe(this, Observer { failure ->
+        viewModel.getBluetoothFailure().observe(this, Observer { failure ->
             val msg = when (failure) {
-                BluetoothFailure.LISTENING_LOST -> getString(R.string.listening_lost)
-                BluetoothFailure.CONNECTION_LOST -> getString(R.string.connection_lost)
-                BluetoothFailure.CONNECTION_FAILED -> getString(R.string.connection_failed)
+                GameViewModel.BluetoothFailureCode.LISTENING_LOST -> getString(R.string.listening_lost)
+                GameViewModel.BluetoothFailureCode.CONNECTION_LOST -> getString(R.string.connection_lost)
+                GameViewModel.BluetoothFailureCode.CONNECTION_FAILED -> getString(R.string.connection_failed)
                 else -> null
             }
             if (msg != null) {
@@ -78,16 +80,16 @@ class GameActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.currentPlayer.observe(this, Observer { player ->
+        viewModel.getCurrentPlayer().observe(this, Observer { player ->
             current_player_text_view.text = getString(R.string.player_turn, player.toString())
         })
     }
 
-    private fun showGameEndedDialog(player: Player) {
+    private fun showGameEndedDialog(player: String) {
         val alertDialog = AlertDialog.Builder(this)
             .setCancelable(false)
             .setTitle(R.string.game_ended_dialog_title)
-            .setMessage(getString(R.string.has_won, player.toString()))
+            .setMessage(getString(R.string.has_won, player))
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
                 viewModel.restartGame()
             }
@@ -111,7 +113,9 @@ class GameActivity : AppCompatActivity() {
             REQUEST_CONNECT_DEVICE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val address = data?.extras?.getString(EXTRA_DEVICE_ADDRESS)
-                    viewModel.connectToDevice(address)
+                    if(address != null) {
+                        viewModel.connectToDevice(address)
+                    }
                 }
             }
             REQUEST_ENABLE_BT_TO_CONNECT -> {

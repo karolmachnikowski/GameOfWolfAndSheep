@@ -6,12 +6,13 @@ import android.content.Intent
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.ViewModel
 
-const val NO_DEVICES = "No devices have been paired"
+const val NO_DEVICES_PAIRED = "No devices have been paired"
+const val NO_DEVICES_FOUND = "No devices have been found"
 
 class ConnectViewModel : ViewModel() {
 
-    var discoveredDevices = ObservableArrayList<String>()
-    var pairedDevices: ArrayList<String>
+    private var discoveredDevices = ObservableArrayList<String>()
+    private var pairedDevices: ArrayList<String>
     private var bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
     init {
@@ -20,12 +21,16 @@ class ConnectViewModel : ViewModel() {
                 this.add((it.name + "\n" + it.address))
             }
             if (this.size == 0) {
-                this.add(NO_DEVICES)
+                this.add(NO_DEVICES_PAIRED)
             }
         }
     }
 
-    fun onReceive(intent: Intent) {
+    fun getDiscoveredDevices() = discoveredDevices
+
+    fun getPairedDevices() = pairedDevices
+
+    fun onReceiveBroadcast(intent: Intent) {
         val action = intent.action
 
         if (BluetoothDevice.ACTION_FOUND == action) {
@@ -39,7 +44,7 @@ class ConnectViewModel : ViewModel() {
 
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
             if (discoveredDevices.size == 0) {
-                discoveredDevices.add(NO_DEVICES)
+                discoveredDevices.add(NO_DEVICES_FOUND)
             }
 
         }

@@ -2,6 +2,7 @@ package com.example.karol.gameofwolfandsheep.model
 
 import androidx.databinding.ObservableArrayMap
 import androidx.lifecycle.MutableLiveData
+import com.example.karol.gameofwolfandsheep.R
 import com.example.karol.gameofwolfandsheep.utils.StringUtil
 
 
@@ -17,9 +18,9 @@ const val LAST_COLUMN = 7
 
 class Board {
 
-    var cells = ObservableArrayMap<String, Int>()
-    var winner = MutableLiveData<Player>()
-    var currentPlayer = MutableLiveData<Player>().apply { value = Player.Wolf }
+    private var cells = ObservableArrayMap<String, CellValue>()
+    private var winner = MutableLiveData<Player>()
+    private var currentPlayer = MutableLiveData<Player>().apply { value = Player.Wolf }
     private var chosenPawn: String? = null
     private var wolfPosition = Pair(LAST_ROW, FIRST_COLUMN)
 
@@ -28,11 +29,11 @@ class Board {
     }
 
     private fun setDefaultCells() {
-        cells[SHEEP_ONE_STARTING_POSITION] = CellValue.Sheep.value
-        cells[SHEEP_TWO_STARTING_POSITION] = CellValue.Sheep.value
-        cells[SHEEP_THREE_STARTING_POSITION] = CellValue.Sheep.value
-        cells[SHEEP_FOUR_STARTING_POSITION] = CellValue.Sheep.value
-        cells[WOLF_STARTING_POSITION] = CellValue.Wolf.value
+        cells[SHEEP_ONE_STARTING_POSITION] = CellValue.Sheep
+        cells[SHEEP_TWO_STARTING_POSITION] = CellValue.Sheep
+        cells[SHEEP_THREE_STARTING_POSITION] = CellValue.Sheep
+        cells[SHEEP_FOUR_STARTING_POSITION] = CellValue.Sheep
+        cells[WOLF_STARTING_POSITION] = CellValue.Wolf
     }
 
     fun restartBoard() {
@@ -44,26 +45,26 @@ class Board {
     }
 
     fun hasSheepSouthWestMovePossible(row: Int, column: Int) =
-        column > FIRST_COLUMN && getCell(row + 1, column - 1) == CellValue.Empty.value
+        column > FIRST_COLUMN && getCell(row + 1, column - 1) == CellValue.Empty
 
     fun hasSheepSouthEastMovePossible(row: Int, column: Int) =
-        column < LAST_COLUMN && getCell(row + 1, column + 1) == CellValue.Empty.value
+        column < LAST_COLUMN && getCell(row + 1, column + 1) == CellValue.Empty
 
     fun hasWolfSouthWestMovePossible() =
         wolfPosition.second > FIRST_COLUMN && wolfPosition.first < LAST_ROW
-                && getCell(wolfPosition.first + 1, wolfPosition.second - 1) == CellValue.Empty.value
+                && getCell(wolfPosition.first + 1, wolfPosition.second - 1) == CellValue.Empty
 
     fun hasWolfNorthWestMovePossible() =
         wolfPosition.second > FIRST_COLUMN
-                && getCell(wolfPosition.first - 1, wolfPosition.second - 1) == CellValue.Empty.value
+                && getCell(wolfPosition.first - 1, wolfPosition.second - 1) == CellValue.Empty
 
     fun hasWolfNortEastMovePossible() =
         wolfPosition.second < LAST_COLUMN
-                && getCell(wolfPosition.first - 1, wolfPosition.second + 1) == CellValue.Empty.value
+                && getCell(wolfPosition.first - 1, wolfPosition.second + 1) == CellValue.Empty
 
     fun hasWolfSouthEastMovePossible() =
         wolfPosition.second < LAST_COLUMN && wolfPosition.first < LAST_ROW
-                && getCell(wolfPosition.first + 1, wolfPosition.second + 1) == CellValue.Empty.value
+                && getCell(wolfPosition.first + 1, wolfPosition.second + 1) == CellValue.Empty
 
     fun hasWolfAnyMovePossible() =
         hasWolfSouthWestMovePossible() || hasWolfNorthWestMovePossible() ||
@@ -77,25 +78,35 @@ class Board {
         winner.value = Player.Sheep
     }
 
-    fun setCell(row: Int, column: Int, value: Int?) {
+    fun getCells() = cells
+
+    fun setCell(row: Int, column: Int, value: CellValue) {
         cells[StringUtil.stringFromNumbers(row, column)] = value
     }
 
     fun setCellAsPossibleMove(row: Int, column: Int) {
-        setCell(row, column, CellValue.PossibleMove.value)
+        setCell(row, column, CellValue.PossibleMove)
     }
 
-    fun setCell(key: String, value: Int?) {
+    fun setCell(key: String, value: CellValue) {
         cells[key] = value
     }
 
-    fun getCell(row: Int, column: Int) = cells[StringUtil.stringFromNumbers(row, column)]
+    fun getCell(row: Int, column: Int) = cells[StringUtil.stringFromNumbers(row, column)] ?: CellValue.Empty
 
-    fun getCell(key: String) = cells[key]
+    fun getCell(key: String) = cells[key] ?: CellValue.Empty
 
     fun setCellAsEmpty(key: String) {
         cells.remove(key)
     }
+
+    fun getWinner() = winner
+
+    fun setCurrentPlayer(player: Player){
+        currentPlayer.value = player
+    }
+
+    fun getCurrentPlayer() = currentPlayer
 
     fun setChosenPawn(row: Int, column: Int) {
         chosenPawn = StringUtil.stringFromNumbers(row, column)
@@ -114,9 +125,15 @@ class Board {
 
     fun getWolfPosition() = wolfPosition
 
-    fun setCurrentPlayer(player: Player){
-        currentPlayer.value = player
+    enum class CellValue(val value: Int?, val resId: Int?, val filter: Boolean) {
+        Empty(null, null, false),
+        Wolf(1, R.drawable.wolf, false),
+        Sheep(2, R.drawable.sheep, false),
+        PossibleMove(3, null, true)
     }
 
-    fun getCurrentPlayer() = currentPlayer.value
+    enum class Player {
+        Wolf,
+        Sheep
+    }
 }

@@ -91,8 +91,8 @@ object BluetoothGameUtil {
     }
 
     @Synchronized
-    fun connect(adress: String?) {
-        val device = bluetoothAdapter.getRemoteDevice(adress)
+    fun connect(address: String) {
+        val device = bluetoothAdapter.getRemoteDevice(address)
         if (connectionState == STATE_CONNECTING) {
             connectThread?.cancel()
             connectThread = null

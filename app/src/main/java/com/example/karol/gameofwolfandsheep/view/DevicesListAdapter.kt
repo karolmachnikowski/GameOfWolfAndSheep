@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.karol.gameofwolfandsheep.R
 
-class DevicesAdapter(private val devices: ArrayList<String>, private val onClickHandler: DevicesAdapterOnClickHandler) :
-    RecyclerView.Adapter<DevicesAdapter.DeviceViewHolder>() {
+class DevicesListAdapter(private val devices: ArrayList<String>, private val onClickHandler: DevicesAdapterOnClickHandler) :
+    RecyclerView.Adapter<DevicesListAdapter.DeviceViewHolder>() {
 
     interface DevicesAdapterOnClickHandler {
         fun onClick(view: View)
@@ -24,7 +24,7 @@ class DevicesAdapter(private val devices: ArrayList<String>, private val onClick
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesAdapter.DeviceViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesListAdapter.DeviceViewHolder {
         val textView = LayoutInflater.from(parent.context)
             .inflate(R.layout.device_list_element, parent, false) as TextView
 

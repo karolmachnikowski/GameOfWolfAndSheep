@@ -77,7 +77,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_00"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 0)}"
-                        app:render='@{gameViewModel.cells["00"]}'
+                        app:render='@{gameViewModel.getCells()["00"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -87,7 +87,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_01"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 1)}"
-                        app:render='@{gameViewModel.cells["01"]}'
+                        app:render='@{gameViewModel.getCells()["01"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -98,7 +98,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_02"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 2)}"
-                        app:render='@{gameViewModel.cells["02"]}'
+                        app:render='@{gameViewModel.getCells()["02"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -108,7 +108,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_03"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 3)}"
-                        app:render='@{gameViewModel.cells["03"]}'
+                        app:render='@{gameViewModel.getCells()["03"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -119,7 +119,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_04"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 4)}"
-                        app:render='@{gameViewModel.cells["04"]}'
+                        app:render='@{gameViewModel.getCells()["04"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -129,7 +129,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_05"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 5)}"
-                        app:render='@{gameViewModel.cells["05"]}'
+                        app:render='@{gameViewModel.getCells()["05"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -140,7 +140,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_06"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0, 6)}"
-                        app:render='@{gameViewModel.cells["06"]}'
+                        app:render='@{gameViewModel.getCells()["06"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -150,7 +150,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_07"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(0,7)}"
-                        app:render='@{gameViewModel.cells["07"]}'
+                        app:render='@{gameViewModel.getCells()["07"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -168,7 +168,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_10"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 0)}"
-                        app:render='@{gameViewModel.cells["10"]}'
+                        app:render='@{gameViewModel.getCells()["10"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -178,7 +178,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_11"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 1)}"
-                        app:render='@{gameViewModel.cells["11"]}'
+                        app:render='@{gameViewModel.getCells()["11"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -188,7 +188,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_12"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 2)}"
-                        app:render='@{gameViewModel.cells["12"]}'
+                        app:render='@{gameViewModel.getCells()["12"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -198,7 +198,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_13"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 3)}"
-                        app:render='@{gameViewModel.cells["13"]}'
+                        app:render='@{gameViewModel.getCells()["13"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -208,7 +208,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_14"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 4)}"
-                        app:render='@{gameViewModel.cells["14"]}'
+                        app:render='@{gameViewModel.getCells()["14"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -218,7 +218,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_15"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 5)}"
-                        app:render='@{gameViewModel.cells["15"]}'
+                        app:render='@{gameViewModel.getCells()["15"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -228,7 +228,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_16"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1, 6)}"
-                        app:render='@{gameViewModel.cells["16"]}'
+                        app:render='@{gameViewModel.getCells()["16"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -238,7 +238,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_17"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(1,7)}"
-                        app:render='@{gameViewModel.cells["17"]}'
+                        app:render='@{gameViewModel.getCells()["17"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -255,7 +255,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_20"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 0)}"
-                        app:render='@{gameViewModel.cells["20"]}'
+                        app:render='@{gameViewModel.getCells()["20"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -265,7 +265,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_21"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 1)}"
-                        app:render='@{gameViewModel.cells["21"]}'
+                        app:render='@{gameViewModel.getCells()["21"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -275,7 +275,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_22"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 2)}"
-                        app:render='@{gameViewModel.cells["22"]}'
+                        app:render='@{gameViewModel.getCells()["22"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -285,7 +285,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_23"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 3)}"
-                        app:render='@{gameViewModel.cells["23"]}'
+                        app:render='@{gameViewModel.getCells()["23"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -295,7 +295,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_24"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 4)}"
-                        app:render='@{gameViewModel.cells["24"]}'
+                        app:render='@{gameViewModel.getCells()["24"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -305,7 +305,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_25"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 5)}"
-                        app:render='@{gameViewModel.cells["25"]}'
+                        app:render='@{gameViewModel.getCells()["25"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -315,7 +315,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_26"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2, 6)}"
-                        app:render='@{gameViewModel.cells["26"]}'
+                        app:render='@{gameViewModel.getCells()["26"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -325,7 +325,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_27"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(2,7)}"
-                        app:render='@{gameViewModel.cells["27"]}'
+                        app:render='@{gameViewModel.getCells()["27"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -342,7 +342,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_30"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 0)}"
-                        app:render='@{gameViewModel.cells["30"]}'
+                        app:render='@{gameViewModel.getCells()["30"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -352,7 +352,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_31"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 1)}"
-                        app:render='@{gameViewModel.cells["31"]}'
+                        app:render='@{gameViewModel.getCells()["31"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -362,7 +362,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_32"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 2)}"
-                        app:render='@{gameViewModel.cells["32"]}'
+                        app:render='@{gameViewModel.getCells()["32"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -372,7 +372,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_33"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 3)}"
-                        app:render='@{gameViewModel.cells["33"]}'
+                        app:render='@{gameViewModel.getCells()["33"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -382,7 +382,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_34"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 4)}"
-                        app:render='@{gameViewModel.cells["34"]}'
+                        app:render='@{gameViewModel.getCells()["34"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -392,7 +392,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_35"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 5)}"
-                        app:render='@{gameViewModel.cells["35"]}'
+                        app:render='@{gameViewModel.getCells()["35"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -402,7 +402,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_36"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3, 6)}"
-                        app:render='@{gameViewModel.cells["36"]}'
+                        app:render='@{gameViewModel.getCells()["36"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -412,7 +412,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_37"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(3,7)}"
-                        app:render='@{gameViewModel.cells["37"]}'
+                        app:render='@{gameViewModel.getCells()["37"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -429,7 +429,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_40"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 0)}"
-                        app:render='@{gameViewModel.cells["40"]}'
+                        app:render='@{gameViewModel.getCells()["40"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -439,7 +439,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_41"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 1)}"
-                        app:render='@{gameViewModel.cells["41"]}'
+                        app:render='@{gameViewModel.getCells()["41"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -449,7 +449,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_42"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 2)}"
-                        app:render='@{gameViewModel.cells["42"]}'
+                        app:render='@{gameViewModel.getCells()["42"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -459,7 +459,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_43"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 3)}"
-                        app:render='@{gameViewModel.cells["43"]}'
+                        app:render='@{gameViewModel.getCells()["43"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -469,7 +469,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_44"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 4)}"
-                        app:render='@{gameViewModel.cells["44"]}'
+                        app:render='@{gameViewModel.getCells()["44"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -479,7 +479,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_45"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 5)}"
-                        app:render='@{gameViewModel.cells["45"]}'
+                        app:render='@{gameViewModel.getCells()["45"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -489,7 +489,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_46"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4, 6)}"
-                        app:render='@{gameViewModel.cells["46"]}'
+                        app:render='@{gameViewModel.getCells()["46"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -499,7 +499,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_47"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(4,7)}"
-                        app:render='@{gameViewModel.cells["47"]}'
+                        app:render='@{gameViewModel.getCells()["47"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -515,7 +515,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_50"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 0)}"
-                        app:render='@{gameViewModel.cells["50"]}'
+                        app:render='@{gameViewModel.getCells()["50"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -525,7 +525,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_51"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 1)}"
-                        app:render='@{gameViewModel.cells["51"]}'
+                        app:render='@{gameViewModel.getCells()["51"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -535,7 +535,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_52"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 2)}"
-                        app:render='@{gameViewModel.cells["52"]}'
+                        app:render='@{gameViewModel.getCells()["52"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -545,7 +545,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_53"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 3)}"
-                        app:render='@{gameViewModel.cells["53"]}'
+                        app:render='@{gameViewModel.getCells()["53"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -555,7 +555,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_54"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 4)}"
-                        app:render='@{gameViewModel.cells["54"]}'
+                        app:render='@{gameViewModel.getCells()["54"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -565,7 +565,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_55"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 5)}"
-                        app:render='@{gameViewModel.cells["55"]}'
+                        app:render='@{gameViewModel.getCells()["55"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -575,7 +575,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_56"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5, 6)}"
-                        app:render='@{gameViewModel.cells["56"]}'
+                        app:render='@{gameViewModel.getCells()["56"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -585,7 +585,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_57"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(5,7)}"
-                        app:render='@{gameViewModel.cells["57"]}'
+                        app:render='@{gameViewModel.getCells()["57"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -601,7 +601,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_60"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 0)}"
-                        app:render='@{gameViewModel.cells["60"]}'
+                        app:render='@{gameViewModel.getCells()["60"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -611,7 +611,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_61"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 1)}"
-                        app:render='@{gameViewModel.cells["61"]}'
+                        app:render='@{gameViewModel.getCells()["61"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -621,7 +621,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_62"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 2)}"
-                        app:render='@{gameViewModel.cells["62"]}'
+                        app:render='@{gameViewModel.getCells()["62"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -631,7 +631,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_63"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 3)}"
-                        app:render='@{gameViewModel.cells["63"]}'
+                        app:render='@{gameViewModel.getCells()["63"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -641,7 +641,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_64"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 4)}"
-                        app:render='@{gameViewModel.cells["64"]}'
+                        app:render='@{gameViewModel.getCells()["64"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -651,7 +651,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_65"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 5)}"
-                        app:render='@{gameViewModel.cells["65"]}'
+                        app:render='@{gameViewModel.getCells()["65"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -661,7 +661,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_66"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6, 6)}"
-                        app:render='@{gameViewModel.cells["66"]}'
+                        app:render='@{gameViewModel.getCells()["66"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -671,7 +671,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_67"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(6,7)}"
-                        app:render='@{gameViewModel.cells["67"]}'
+                        app:render='@{gameViewModel.getCells()["67"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -688,7 +688,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_70"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 0)}"
-                        app:render='@{gameViewModel.cells["70"]}'
+                        app:render='@{gameViewModel.getCells()["70"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -699,7 +699,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_71"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 1)}"
-                        app:render='@{gameViewModel.cells["71"]}'
+                        app:render='@{gameViewModel.getCells()["71"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -709,7 +709,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_72"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 2)}"
-                        app:render='@{gameViewModel.cells["72"]}'
+                        app:render='@{gameViewModel.getCells()["72"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -719,7 +719,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_73"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 3)}"
-                        app:render='@{gameViewModel.cells["73"]}'
+                        app:render='@{gameViewModel.getCells()["73"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -729,7 +729,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_74"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 4)}"
-                        app:render='@{gameViewModel.cells["74"]}'
+                        app:render='@{gameViewModel.getCells()["74"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -739,7 +739,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_75"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 5)}"
-                        app:render='@{gameViewModel.cells["75"]}'
+                        app:render='@{gameViewModel.getCells()["75"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -749,7 +749,7 @@
                         android:background="@drawable/cell_background_two"
                         android:id="@+id/cell_76"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7, 6)}"
-                        app:render='@{gameViewModel.cells["76"]}'
+                        app:render='@{gameViewModel.getCells()["76"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
@@ -759,7 +759,7 @@
                         android:background="@drawable/cell_background_one"
                         android:id="@+id/cell_77"
                         android:onClick="@{() -> gameViewModel.onClickedCellAt(7,7)}"
-                        app:render='@{gameViewModel.cells["7"]}'
+                        app:render='@{gameViewModel.getCells()["7"]}'
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"/>
