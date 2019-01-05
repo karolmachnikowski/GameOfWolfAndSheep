@@ -3,61 +3,47 @@ package com.example.karol.gameofwolfandsheep.viewmodel
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
-import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.ViewModel
-
-const val NO_DEVICES_PAIRED = "No devices have been paired"
-const val NO_DEVICES_FOUND = "No devices have been found"
+import com.example.karol.gameofwolfandsheep.model.BluetoothDevices
+import com.example.karol.gameofwolfandsheep.utils.BluetoothService
 
 class ConnectViewModel : ViewModel() {
 
-    private var discoveredDevices = ObservableArrayList<String>()
-    private var pairedDevices: ArrayList<String>
-    private var bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+    private val devices = BluetoothDevices()
+    private var wasDiscoveryStarted = false
 
     init {
-        pairedDevices = arrayListOf<String>().apply {
-            bluetoothAdapter.bondedDevices.forEach {
-                this.add((it.name + "\n" + it.address))
-            }
-            if (this.size == 0) {
-                this.add(NO_DEVICES_PAIRED)
-            }
-        }
+        devices.updatePairedDevices()
     }
 
-    fun getDiscoveredDevices() = discoveredDevices
+    fun getDiscoveredDevices() = devices.getDiscoveredDevices()
 
-    fun getPairedDevices() = pairedDevices
+    fun getPairedDevices() = devices.getPairedDevices()
+
+    fun updatePairedDevices() {
+        devices.updatePairedDevices()
+    }
 
     fun onReceiveBroadcast(intent: Intent) {
         val action = intent.action
 
         if (BluetoothDevice.ACTION_FOUND == action) {
             val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
-            if (device.bondState != BluetoothDevice.BOND_BONDED) {
-                val deviceInfo = if (device.name != null) device.name + "\n" + device.address
-                else device.address
-                if (!discoveredDevices.contains(deviceInfo))
-                    discoveredDevices.add(deviceInfo)
-            }
+            devices.addDiscoveredDevice(device)
 
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
-            if (discoveredDevices.size == 0) {
-                discoveredDevices.add(NO_DEVICES_FOUND)
+            if (getDiscoveredDevices().size == 0 && wasDiscoveryStarted) {
+                devices.setNoDevicesDiscoveredMessage()
             }
-
         }
     }
 
     fun startDiscovery() {
-        cancelDiscovery()
-        bluetoothAdapter.startDiscovery()
+        BluetoothService.startDiscovery()
+        wasDiscoveryStarted = true
     }
 
     fun cancelDiscovery() {
-        if (bluetoothAdapter!!.isDiscovering) {
-            bluetoothAdapter.cancelDiscovery()
-        }
+        BluetoothService.cancelDiscovery()
     }
 }

@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.karol.gameofwolfandsheep.R
 import com.example.karol.gameofwolfandsheep.databinding.GameActivityBinding
+import com.example.karol.gameofwolfandsheep.model.Game.GameBluetoothFailureCode
 import com.example.karol.gameofwolfandsheep.utils.*
 import com.example.karol.gameofwolfandsheep.viewmodel.GameViewModel
 import kotlinx.android.synthetic.main.game_activity.*
@@ -45,10 +46,10 @@ class GameActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         viewModel.getWinner().observe(this, Observer { winner ->
-            showGameEndedDialog(winner)
+            showGameEndedDialog(winner.toString())
         })
 
-        viewModel.getBluetoothStatus().observe(this, Observer { status ->
+        viewModel.getBluetoothState().observe(this, Observer { status ->
             this.invalidateOptionsMenu()
             bluetooth_state_text_view.text =
                     when (status) {
@@ -70,9 +71,9 @@ class GameActivity : AppCompatActivity() {
 
         viewModel.getBluetoothFailure().observe(this, Observer { failure ->
             val msg = when (failure) {
-                GameViewModel.BluetoothFailureCode.LISTENING_LOST -> getString(R.string.listening_lost)
-                GameViewModel.BluetoothFailureCode.CONNECTION_LOST -> getString(R.string.connection_lost)
-                GameViewModel.BluetoothFailureCode.CONNECTION_FAILED -> getString(R.string.connection_failed)
+                GameBluetoothFailureCode.LISTENING_LOST -> getString(R.string.listening_lost)
+                GameBluetoothFailureCode.CONNECTION_LOST -> getString(R.string.connection_lost)
+                GameBluetoothFailureCode.CONNECTION_FAILED -> getString(R.string.connection_failed)
                 else -> null
             }
             if (msg != null) {
@@ -145,7 +146,7 @@ class GameActivity : AppCompatActivity() {
         val allowToConnectMenuItem = menu?.findItem(R.id.allow_to_connect)
         val connectMenuItem = menu?.findItem(R.id.connect)
         val disconnectMenuItem = menu?.findItem(R.id.disconnet)
-        when (viewModel.getBluetoothState()) {
+        when (viewModel.getBluetoothState().value) {
             STATE_NONE -> {
                 allowToConnectMenuItem?.setTitle(R.string.allow_to_connect_menu_item)
             }
@@ -172,12 +173,12 @@ class GameActivity : AppCompatActivity() {
                 return true
             }
             R.id.disconnet -> {
-                viewModel.stopBluetoothUtil()
+                viewModel.stopGameBluetoothThreads()
                 return true
             }
             R.id.allow_to_connect -> {
-                when (viewModel.getBluetoothState()) {
-                    STATE_LISTENING -> viewModel.stopBluetoothUtil()
+                when (viewModel.getBluetoothState().value) {
+                    STATE_LISTENING -> viewModel.stopGameBluetoothThreads()
                     else -> {
                         if(!viewModel.isBluetoothEnabled()){
                             askForBuetoothEnabling(REQUEST_ENABLE_BT_TO_ALLOW_CONNECT)
@@ -198,6 +199,6 @@ class GameActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.stopBluetoothUtil()
+        viewModel.stopGameBluetoothThreads()
     }
 }

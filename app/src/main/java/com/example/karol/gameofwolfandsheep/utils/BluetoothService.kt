@@ -9,13 +9,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.example.karol.gameofwolfandsheep.viewmodel.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
 
-const val SERVICE_NAME = "BluetoothGameUtil"
+const val SERVICE_NAME = "BluetoothService"
 const val DISCOVERABLE_TIME = 300
 
 const val STATE_NONE = 0
@@ -35,7 +34,7 @@ const val MESSAGE_WRITE_FAILED = 8
 
 const val DEVICE_NAME = "DEVICE_NAME_KEY"
 
-object BluetoothGameUtil {
+object BluetoothService {
 
     private val serviceUUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66")
 
@@ -62,6 +61,19 @@ object BluetoothGameUtil {
             context.startActivity(discoverableIntent)
         }
     }
+
+    fun startDiscovery() {
+        cancelDiscovery()
+        bluetoothAdapter.startDiscovery()
+    }
+
+    fun cancelDiscovery() {
+        if (bluetoothAdapter.isDiscovering) {
+            bluetoothAdapter.cancelDiscovery()
+        }
+    }
+
+    fun getPairedDevices() = bluetoothAdapter.bondedDevices
 
     @Synchronized
     private fun handleStateChange() {
@@ -96,11 +108,13 @@ object BluetoothGameUtil {
         if (connectionState == STATE_CONNECTING) {
             connectThread?.cancel()
             connectThread = null
-
         }
 
         connectedThread?.cancel()
         connectedThread = null
+
+        acceptThread?.cancel()
+        acceptThread = null
 
         connectionState = STATE_CONNECTING
         connectThread = ConnectThread(device)
@@ -137,7 +151,7 @@ object BluetoothGameUtil {
     fun stop() {
         if (connectThread != null) {
             connectThread!!.cancel()
-            connectThread
+            connectThread = null
         }
 
         if (connectedThread != null) {
@@ -191,15 +205,15 @@ object BluetoothGameUtil {
             bluetoothAdapter.listenUsingRfcommWithServiceRecord(SERVICE_NAME, serviceUUID)
 
         override fun run() {
-            while (connectionState != STATE_CONNECTED_AS_SERVER && connectionState != STATE_CONNECTED_AS_CLIENT) {
+            while (connectionState == STATE_LISTENING) {
                 val socket: BluetoothSocket? = try {
                     serverSocket.accept()
                 } catch (e: IOException) {
-                    Log.e(BluetoothGameUtil::javaClass.name, "Socket's accept() method failed", e)
+                    Log.e(BluetoothService::javaClass.name, "Socket's accept() method failed", e)
                     null
                 }
 
-                if(!isBluetoothEnabled()){
+                if (!isBluetoothEnabled()) {
                     listeningLost()
                     return
                 }
@@ -207,12 +221,10 @@ object BluetoothGameUtil {
                 if (socket != null) {
                     synchronized(this) {
                         when (connectionState) {
-                            STATE_LISTENING, STATE_CONNECTING ->
+                            STATE_LISTENING ->
                                 connected(socket, socket.remoteDevice, true)
-                            STATE_NONE, STATE_CONNECTED_AS_SERVER, STATE_CONNECTED_AS_CLIENT ->
+                            else ->
                                 serverSocket.close()
-                            else -> {
-                            }
                         }
                     }
                 }
@@ -223,7 +235,7 @@ object BluetoothGameUtil {
             try {
                 serverSocket.close()
             } catch (e: IOException) {
-                Log.e(BluetoothGameUtil::javaClass.name, "Could not close the connect socket", e)
+                Log.e(BluetoothService::javaClass.name, "Could not close the connect socket", e)
             }
         }
     }
@@ -241,8 +253,7 @@ object BluetoothGameUtil {
                 try {
                     socket.close()
                 } catch (e2: IOException) {
-                    Log.e(BluetoothGameUtil::javaClass.name,
-                        "unable to close()$socket during connection failure", e2)
+                    Log.e(BluetoothService::javaClass.name, "unable to close()$socket during connection failure", e2)
                 }
                 connectionFailed()
                 return
@@ -259,7 +270,7 @@ object BluetoothGameUtil {
             try {
                 socket.close()
             } catch (e: IOException) {
-                Log.e(BluetoothGameUtil::javaClass.name, "Could not close the client socket", e)
+                Log.e(BluetoothService::javaClass.name, "Could not close the client socket", e)
             }
         }
     }
@@ -277,7 +288,7 @@ object BluetoothGameUtil {
                 numBytes = try {
                     inStream.read(buffer)
                 } catch (e: IOException) {
-                    Log.e(BluetoothGameUtil::javaClass.name, "Input stream was disconnected", e)
+                    Log.e(BluetoothService::javaClass.name, "Input stream was disconnected", e)
                     connectionLost()
                     break
                 }
@@ -289,7 +300,7 @@ object BluetoothGameUtil {
             try {
                 outStream.write(buffer)
             } catch (e: IOException) {
-                Log.e(BluetoothGameUtil::javaClass.name, "Error occurred when sending data", e)
+                Log.e(BluetoothService::javaClass.name, "Error occurred when sending data", e)
                 handler.obtainMessage(MESSAGE_WRITE_FAILED).let { handler.sendMessage(it) }
                 return
             }
@@ -301,7 +312,7 @@ object BluetoothGameUtil {
             try {
                 socket.close()
             } catch (e: IOException) {
-                Log.e(BluetoothGameUtil::javaClass.name, "Could not close the connect socket", e)
+                Log.e(BluetoothService::javaClass.name, "Could not close the connect socket", e)
             }
         }
     }

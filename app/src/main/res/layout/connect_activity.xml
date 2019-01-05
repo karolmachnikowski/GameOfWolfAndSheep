@@ -16,11 +16,13 @@
             android:padding="5dp"
             android:visibility="gone"
     />
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paired_devices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:scrollbars="vertical"
             android:scrollbarThumbVertical="@drawable/custom_scroll"
     />
 
@@ -40,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:scrollbars="vertical"
             android:scrollbarThumbVertical="@drawable/custom_scroll"
     />
 

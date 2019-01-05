@@ -70,8 +70,9 @@ class ConnectActivity : AppCompatActivity() {
         filter = IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         this.registerReceiver(broadcastReveiver, filter)
 
-        if (viewModel.getPairedDevices().size > 0)
+        if (viewModel.getPairedDevices().size > 0) {
             title_paired_devices.visibility = View.VISIBLE
+        }
     }
 
     private fun setupViewModel() {
@@ -79,26 +80,8 @@ class ConnectActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.getDiscoveredDevices().addOnListChangedCallback(object :
-            ObservableList.OnListChangedCallback<ObservableArrayList<String>>() {
-            override fun onItemRangeInserted(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
-                discoveredDevicesAdapter.notifyDataSetChanged() }
-
-            override fun onChanged(sender: ObservableArrayList<String>?) {
-            }
-
-            override fun onItemRangeRemoved(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
-            }
-
-            override fun onItemRangeMoved(
-                sender: ObservableArrayList<String>?,
-                fromPosition: Int, toPosition: Int, itemCount: Int
-            ) {
-            }
-
-            override fun onItemRangeChanged(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
-            }
-        })
+        viewModel.getDiscoveredDevices().addOnListChangedCallback(onDiscoveredDevicesChangedCallback)
+        viewModel.getPairedDevices().addOnListChangedCallback(onPairedDevicesChangedCallback)
     }
 
     private fun doDiscovery() {
@@ -108,6 +91,11 @@ class ConnectActivity : AppCompatActivity() {
         viewModel.startDiscovery()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updatePairedDevices()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         viewModel.cancelDiscovery()
@@ -115,7 +103,7 @@ class ConnectActivity : AppCompatActivity() {
         this.unregisterReceiver(broadcastReveiver)
     }
 
-    private val onClickHandler = object: DevicesListAdapter.DevicesAdapterOnClickHandler {
+    private val onClickHandler = object : DevicesListAdapter.DevicesAdapterOnClickHandler {
         override fun onClick(view: View) {
             viewModel.cancelDiscovery()
 
@@ -142,8 +130,49 @@ class ConnectActivity : AppCompatActivity() {
         }
     }
 
+    private val onDiscoveredDevicesChangedCallback = object :
+        ObservableList.OnListChangedCallback<ObservableArrayList<String>>() {
+        override fun onItemRangeInserted(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+            discoveredDevicesAdapter.notifyDataSetChanged()
+        }
+
+        override fun onChanged(sender: ObservableArrayList<String>?) {
+        }
+
+        override fun onItemRangeRemoved(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+        }
+
+        override fun onItemRangeMoved(
+            sender: ObservableArrayList<String>?,
+            fromPosition: Int, toPosition: Int, itemCount: Int
+        ) {
+        }
+
+        override fun onItemRangeChanged(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+        }
+    }
+
+    private val onPairedDevicesChangedCallback = object :
+        ObservableList.OnListChangedCallback<ObservableArrayList<String>>() {
+        override fun onItemRangeInserted(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+            pairedDevicesAdapter.notifyDataSetChanged()
+        }
+
+        override fun onChanged(sender: ObservableArrayList<String>?) {
+        }
+
+        override fun onItemRangeRemoved(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+        }
+
+        override fun onItemRangeMoved(
+            sender: ObservableArrayList<String>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
+        }
+
+        override fun onItemRangeChanged(sender: ObservableArrayList<String>?, positionStart: Int, itemCount: Int) {
+        }
+    }
+
     companion object {
         fun intent(context: Context) = Intent(context, ConnectActivity::class.java)
     }
-
 }
